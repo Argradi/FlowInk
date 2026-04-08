@@ -1,0 +1,17 @@
+#nav-container{
+    background-color: rgb(234, 234, 234);
+    width: 100%;
+    height: 20vh;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-sizing: border-box;
+    padding: 0 40px 0 80px;
+}
+
+#navs{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 40%;
+}
