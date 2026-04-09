@@ -9,7 +9,7 @@ function Navbar() {
                 <Link><h2>Add</h2></Link>
                 <Link><h2>About</h2></Link>
             </div>
-            <h1>Header</h1>
+            <Link to={"/login"}>Login</Link>
         </div>
     )
 }
