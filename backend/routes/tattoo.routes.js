@@ -7,8 +7,9 @@ const { routes } = require("../app");
 
 router.post("/tattoos", isAuthenticated, (req, res) => {
     const newTattoo = req.body
+    const userId = req.payload._id;
 
-    Tattoo.create(newTattoo)
+    Tattoo.create({ ...newTattoo, userId: userId })
         .then((tattoo) => {
             res.status(201).json(tattoo)
         })

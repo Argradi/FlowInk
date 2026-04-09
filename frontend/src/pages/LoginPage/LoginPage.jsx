@@ -18,8 +18,8 @@ function LoginPage() {
 
         axios
             .post("http://localhost:5005/auth/login", user)
-            .then(() => {
-                console.log("login con exito de", email)
+            .then((response) => {
+                localStorage.setItem("authToken", response.data.authToken)
                 navigate("/")
             })
             .catch((err) => console.log("Error al hacer login:", err.response?.data?.message))
