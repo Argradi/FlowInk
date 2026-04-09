@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import TattooCard from "../components/TattooCard/TattooCard"
+import TattooCard from "../../components/TattooCard/TattooCard"
 import axios from 'axios'
 import './HomePage.css'
 

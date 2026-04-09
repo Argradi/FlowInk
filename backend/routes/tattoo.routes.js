@@ -18,8 +18,9 @@ router.post("/tattoos", isAuthenticated, (req, res) => {
         })
 })
 
-router.get("/tattoos", (req, res) => {
+router.get("/tattoos", (req, res, next) => {
     Tattoo.find({})
+        .populate("userId")
         .then((tattoo) => {
             res.json(tattoo)
         })
@@ -28,7 +29,7 @@ router.get("/tattoos", (req, res) => {
         })
 })
 
-router.get("/tattoos/:tattooId", (req, res) => {
+router.get("/tattoos/:tattooId", (req, res, next) => {
     const { tattooId } = req.params
 
     Tattoo.findById(tattooId)
@@ -41,7 +42,7 @@ router.get("/tattoos/:tattooId", (req, res) => {
 
 })
 
-router.put("/tattoos/:tattooId", isAuthenticated, (req, res) => {
+router.put("/tattoos/:tattooId", isAuthenticated, (req, res, next) => {
     const newDetails = req.body
     const { tattooId } = req.params
 
@@ -55,7 +56,7 @@ router.put("/tattoos/:tattooId", isAuthenticated, (req, res) => {
         })
 })
 
-router.delete("/tattoos/:tattooId", isAuthenticated, (req, res) => {
+router.delete("/tattoos/:tattooId", isAuthenticated, (req, res, next) => {
     const { tattooId } = req.params
 
     Tattoo.findByIdAndDelete(tattooId)
