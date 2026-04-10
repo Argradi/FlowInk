@@ -3,6 +3,7 @@ const router = express.Router()
 
 const Tattoo = require("../models/Tattoo.model")
 const { isAuthenticated } = require("../middleware/jwt.middleware");
+const { isOwner } = require("../middleware/owner.middleware");
 const { routes } = require("../app");
 
 router.post("/tattoos", isAuthenticated, (req, res) => {
@@ -43,7 +44,7 @@ router.get("/tattoos/:tattooId", (req, res, next) => {
 
 })
 
-router.put("/tattoos/:tattooId", isAuthenticated, (req, res, next) => {
+router.put("/tattoos/:tattooId", isAuthenticated, isOwner, (req, res, next) => {
     const newDetails = req.body
     const { tattooId } = req.params
 
@@ -57,7 +58,7 @@ router.put("/tattoos/:tattooId", isAuthenticated, (req, res, next) => {
         })
 })
 
-router.delete("/tattoos/:tattooId", isAuthenticated, (req, res, next) => {
+router.delete("/tattoos/:tattooId", isAuthenticated, isOwner, (req, res, next) => {
     const { tattooId } = req.params
 
     Tattoo.findByIdAndDelete(tattooId)
