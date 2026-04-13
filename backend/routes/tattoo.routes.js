@@ -23,6 +23,7 @@ router.post("/tattoos", isAuthenticated, (req, res) => {
 router.get("/tattoos", (req, res, next) => {
     Tattoo.find({})
         .populate("userId")
+        .populate("comments.userId")
         .then((tattoo) => {
             res.json(tattoo)
         })
@@ -35,6 +36,8 @@ router.get("/tattoos/:tattooId", (req, res, next) => {
     const { tattooId } = req.params
 
     Tattoo.findById(tattooId)
+        .populate("userId")
+        .populate("comments.userId")
         .then((tattoo) => {
             res.json(tattoo)
         })
@@ -64,6 +67,33 @@ router.delete("/tattoos/:tattooId", isAuthenticated, isOwner, (req, res, next) =
     Tattoo.findByIdAndDelete(tattooId)
         .then((response) => {
             res.status(204).json(response)
+        })
+        .catch((err) => {
+            next(err)
+        })
+})
+
+router.post("/tattoos/:tattooId/comments", isAuthenticated, (req, res, next) => {
+    const { tattooId } = req.params
+    const { text } = req.body
+    const userId = req.payload._id
+
+    Tattoo.findById(tattooId)
+        .then((tattoo) => {
+            const newComment = {
+                userId: userId,
+                text: text
+            }
+
+            tattoo.comments.push(newComment)
+
+            return tattoo.save()
+        })
+        .then((savedTattoo) => {
+            return savedTattoo.populate("comments.userId")
+        })
+        .then((response) => {
+            res.status(201).json(response)
         })
         .catch((err) => {
             next(err)

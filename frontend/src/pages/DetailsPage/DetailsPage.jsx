@@ -51,7 +51,7 @@ function DetailsPage() {
         <div>
             <h1>Details Page</h1>
             <h3>{tattoo.title}</h3>
-            {user && user._id === tattoo.userId &&(
+            {user && user._id === tattoo.userId._id &&(
                 <>
                     <button onClick={deleteTatto}>Borrar</button>
                     <Link to={`/edit/${tattooId}`}>
@@ -59,6 +59,19 @@ function DetailsPage() {
                     </Link>
                 </>
             )}
+            <Link to={`/tattoo/${tattooId}/comment`}>
+                <button>Comentario</button>
+            </Link>
+            <div>
+                {tattoo.comments.map((comment) => {  
+                    return (
+                        <div key={comment._id}>
+                            <h4>{comment.userId.name}</h4>
+                            <h3>{comment.text}</h3>
+                        </div>
+                    )
+                })}
+            </div>
         </div>
     )
 }

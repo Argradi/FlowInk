@@ -7,6 +7,7 @@ import SignUpPage from "./pages/SignUpPage/SignUpPage"
 import LoginPage from "./pages/LoginPage/LoginPage"
 import AddPage from "./pages/AddPage/AddPage"
 import EditPage from "./pages/EditPage/EditPage"
+import CommentPage from "./pages/CommentPage/CommentPage"
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
         <Route path="/login" element={<LoginPage />}/>
         <Route path="/add" element={<AddPage />}/>
         <Route path="/edit/:tattooId" element={<EditPage />}/>
+        <Route path="/tattoo/:tattooId/comment" element={<CommentPage />}/>
       </Routes>
       <Footer />
     </>
