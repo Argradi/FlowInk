@@ -24,7 +24,7 @@ function AddPage() {
         const localToken = localStorage.getItem("authToken");
 
         axios
-            .post("http://localhost:5005/api/upload", uploadData, {
+            .post(`${import.meta.env.VITE_API_URL}/api/upload`, uploadData, {
                 headers: { Authorization: `Bearer ${localToken}` }
             })
             .then((response) => {
