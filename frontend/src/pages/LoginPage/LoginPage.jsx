@@ -17,7 +17,7 @@ function LoginPage() {
         }
 
         axios
-            .post("http://localhost:5005/auth/login", user)
+            .post(`${import.meta.env.VITE_API_URL}/auth/login`, user)
             .then((response) => {
                 localStorage.setItem("authToken", response.data.authToken)
                 navigate("/")

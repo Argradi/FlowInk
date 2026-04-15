@@ -15,7 +15,7 @@ function CommentPage() {
         const localToken = localStorage.getItem("authToken")
 
         axios
-            .post(`http://localhost:5005/api/tattoos/${tattooId}/comments`, { text }, {
+            .post(`${import.meta.env.VITE_API_URL}/api/tattoos/${tattooId}/comments`, { text }, {
                 headers: { Authorization: `Bearer ${localToken}` }
             })
             .then((response) => {

@@ -19,7 +19,7 @@ function SignUpPage() {
         }
 
         axios
-            .post("http://localhost:5005/auth/signup", newUser)
+            .post(`${import.meta.env.VITE_API_URL}/auth/signup`, newUser)
             .then((user) => {
                 console.log("Registro con exito de", user.data.user.name)
                 navigate("/login")

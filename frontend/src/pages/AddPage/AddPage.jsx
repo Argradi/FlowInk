@@ -17,7 +17,7 @@ function AddPage() {
         const localToken = localStorage.getItem("authToken")
 
         axios
-            .post("http://localhost:5005/api/tattoos", newTattoo, {
+            .post(`${import.meta.env.VITE_API_URL}/api/tattoos`, newTattoo, {
                 headers: { Authorization: `Bearer ${localToken}` }
             })
             .then((response) => {

@@ -14,7 +14,7 @@ function DetailsPage() {
 
     const getTattoo = () => {
         axios
-            .get(`http://localhost:5005/api/tattoos/${tattooId}`)
+            .get(`${import.meta.env.VITE_API_URL}/api/tattoos/${tattooId}`)
             .then((tattoo) => {
                 setTattoo(tattoo.data)
             })
@@ -31,7 +31,7 @@ function DetailsPage() {
         const localToken = localStorage.getItem("authToken")
 
         axios
-            .delete(`http://localhost:5005/api/tattoos/${tattooId}`, {
+            .delete(`${import.meta.env.VITE_API_URL}/api/tattoos/${tattooId}`, {
                 headers: { Authorization: `Bearer ${localToken}` }
             })
             .then((response) => {

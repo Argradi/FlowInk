@@ -9,7 +9,7 @@ function HomePage() {
 
     const getTattoos = () => {
         axios
-            .get('http://localhost:5005/api/tattoos')
+            .get(`${import.meta.env.VITE_API_URL}/api/tattoos`)
             .then((tattoo) => {
                 setTattoos(tattoo.data)
             })
