@@ -1,6 +1,7 @@
 :root {
-  --text: #6b6375;
-  --text-h: #08060d;
+  background-color: #181818;
+  --text: #9e9e9e;
+  --text-h: #ffffff;
   --bg: #fff;
   --border: #e5e4e7;
   --code-bg: #f4f3ec;
@@ -38,6 +39,14 @@ h1,
 h2 {
   font-family: var(--heading);
   font-weight: 500;
+}
+
+h1, h2, h3{
+  color: var(--text-h);
+}
+
+h4, p, label{
+  color: var(--text);
 }
 
 h1 {

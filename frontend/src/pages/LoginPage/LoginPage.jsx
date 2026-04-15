@@ -1,9 +1,12 @@
 import { Link, useNavigate } from 'react-router-dom'
 import axios from "axios"
-import { useState } from "react"
+import { useState, useContext } from "react"
+import { AuthContext } from "../../context/auth.context"
 
 function LoginPage() {
     const navigate = useNavigate()
+
+    const { authenticateUser } = useContext(AuthContext)
 
     const [ email, setEmail ] = useState("")
     const [ password, setPassword ] = useState("")
@@ -20,6 +23,7 @@ function LoginPage() {
             .post(`${import.meta.env.VITE_API_URL}/auth/login`, user)
             .then((response) => {
                 localStorage.setItem("authToken", response.data.authToken)
+                authenticateUser()
                 navigate("/")
             })
             .catch((err) => console.log("Error al hacer login:", err.response?.data?.message))

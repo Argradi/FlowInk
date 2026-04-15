@@ -1,9 +1,6 @@
 #tattoo-card{
-    background-color: rgb(233, 233, 233);
-    width: 20%;
-    padding: 20px;
+    background-color: #121212;
     border-radius: 10px;
-    box-shadow: 5px 5px rgb(218, 218, 218);
 }
 
 #tattoo-card img{
