@@ -106,7 +106,7 @@ function AddPage() {
                             },
                         }}
                     />
-                    <Button variant="contained" disabled={isUploading || !image} sx={{ backgroundColor: "#FF8A8A" }}>
+                    <Button type="submit" variant="contained" disabled={isUploading || !image} sx={{ backgroundColor: "#FF8A8A" }}>
                         {isUploading ? "Subiendo imagen..." : "Publicar"}
                     </Button>
                 </div>
