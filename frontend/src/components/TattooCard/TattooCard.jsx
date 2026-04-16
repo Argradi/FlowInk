@@ -5,7 +5,7 @@ function TattooCard({tattoo}) {
 
     return(
         <Link to={`/tattoo/${tattoo._id}`} id="tattoo-card">
-            <img src={tattoo.image} />
+            <img src={tattoo.image} className={tattoo.isSelling ? "blurred-image" : ""}/>
         </Link>
     )
 }

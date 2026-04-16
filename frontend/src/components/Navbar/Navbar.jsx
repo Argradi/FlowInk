@@ -23,7 +23,7 @@ function Navbar() {
     return (
         <div id="nav-container">
             <div id="navs">
-                <Link to={"/"}><h2>FlowInk</h2></Link>
+                <Link to={"/"}><h2 id="title">FlowInk</h2></Link>
             </div>
             {user ? (
                 <>

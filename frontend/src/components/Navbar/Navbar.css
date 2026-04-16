@@ -20,6 +20,10 @@ a {
     color: black;
 }
 
+#title {
+    color: #FF8A8A;
+}
+
 .modal-container {
     position: absolute;
     top: 50%;

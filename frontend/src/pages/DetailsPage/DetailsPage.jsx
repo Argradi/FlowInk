@@ -113,7 +113,7 @@ function DetailsPage() {
     return (
         <div id="details-page">
             <div id="img-container">
-                <img src={tattoo.image} />
+                <img src={tattoo.image} className={tattoo.isSelling ? "blurred-image" : ""}/>
             </div>
             <div id="info-container">
                 <h3>{tattoo.userId.name}</h3>

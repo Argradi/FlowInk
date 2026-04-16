@@ -1,0 +1,10 @@
+#payment-container{
+    text-align: center;
+    margin-bottom: 10vh;
+    color: white;
+}
+
+#payment-container img{
+    width: 300px;
+    border-radius: 10px;
+}

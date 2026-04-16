@@ -8,6 +8,7 @@ import LoginPage from "./pages/LoginPage/LoginPage"
 import AddPage from "./pages/AddPage/AddPage"
 import EditPage from "./pages/EditPage/EditPage"
 import CommentPage from "./pages/CommentPage/CommentPage"
+import PaymentSuccessPage from "./pages/PaymentSuccessPage/PaymentSuccessPage"
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
         <Route path="/add" element={<AddPage />}/>
         <Route path="/edit/:tattooId" element={<EditPage />}/>
         <Route path="/tattoo/:tattooId/comment" element={<CommentPage />}/>
+        <Route path="/payment-success" element={<PaymentSuccessPage />}/>
       </Routes>
       <Footer />
     </>

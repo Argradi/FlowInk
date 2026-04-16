@@ -41,11 +41,15 @@ h2 {
   font-weight: 500;
 }
 
-h1, h2, h3{
+h1,
+h2,
+h3 {
   color: var(--text-h);
 }
 
-h4, p, label{
+h4,
+p,
+label {
   color: var(--text);
 }
 
@@ -53,33 +57,45 @@ h1 {
   font-size: 56px;
   letter-spacing: -1.68px;
   margin: 32px 0;
+
   @media (max-width: 1024px) {
     font-size: 36px;
     margin: 20px 0;
   }
 }
+
 h2 {
   font-size: 24px;
   line-height: 118%;
   letter-spacing: -0.24px;
   margin: 0 0 8px;
+
   @media (max-width: 1024px) {
     font-size: 20px;
   }
 }
+
 p {
   margin: 0;
 }
+
 a {
   text-decoration: none;
 }
 
-.floating-button.MuiIconButton-root{
-    position: fixed;
-    bottom: 12%;
-    right: 7%;
-    background-color: #FF8A8A;
-    color: white;
-    width: 5%;
-    height: 9%;
+.floating-button.MuiIconButton-root {
+  position: fixed;
+  bottom: 12%;
+  right: 7%;
+  background-color: #FF8A8A;
+  color: white;
+  width: 5%;
+  height: 9%;
+}
+
+.blurred-image {
+  filter: blur(2px);
+  transition: filter 0.3s ease;
+  user-select: none;
+  pointer-events: none;
 }
