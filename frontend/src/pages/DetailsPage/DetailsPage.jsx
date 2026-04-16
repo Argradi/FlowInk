@@ -58,7 +58,7 @@ function DetailsPage() {
 
     const likeTattoo = () => {
         axios
-            .post(`http://localhost:5005/api/tattoos/${tattooId}/likes`, {}, {
+            .post(`${import.meta.env.VITE_API_URL}/api/tattoos/${tattooId}/likes`, {}, {
                 headers: { Authorization: `Bearer ${localToken}` }
             })
             .then((likes) => {
@@ -73,7 +73,7 @@ function DetailsPage() {
         const localToken = localStorage.getItem("authToken")
 
         axios
-            .post(`http://localhost:5005/api/tattoos/${tattooId}/comments`, { text }, {
+            .post(`${import.meta.env.VITE_API_URL}/api/tattoos/${tattooId}/comments`, { text }, {
                 headers: { Authorization: `Bearer ${localToken}` }
             })
             .then((response) => {
