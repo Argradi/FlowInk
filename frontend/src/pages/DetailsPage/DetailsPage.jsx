@@ -8,6 +8,8 @@ import IconButton from '@mui/material/IconButton';
 import SendIcon from '@mui/icons-material/Send';
 import Button from '@mui/material/Button';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import './DetailsPage.css'
 
 function DetailsPage() {
@@ -113,7 +115,7 @@ function DetailsPage() {
     return (
         <div id="details-page">
             <div id="img-container">
-                <img src={tattoo.image} className={tattoo.isSelling ? "blurred-image" : ""}/>
+                <img src={tattoo.image} className={tattoo.isSelling ? "blurred-image" : ""} />
             </div>
             <div id="info-container">
                 <h3>{tattoo.userId.name}</h3>
@@ -126,7 +128,22 @@ function DetailsPage() {
                         </Link>
                     </>
                 )}
-                <Button onClick={likeTattoo}>Like {likes.length}</Button>
+                <div id="like-container">
+                    <IconButton
+                        onClick={likeTattoo}
+                        aria-label="like"
+                        sx={{ color: '#FF8A8A' }}
+                    >
+                        {user && likes.includes(user._id) ? (
+                            <FavoriteIcon />
+                        ) : (
+                            <FavoriteBorderIcon />
+                        )}
+                    </IconButton>
+                    <span>
+                        {likes.length}
+                    </span>
+                </div>
                 <hr />
                 <p>{tattoo.description}</p>
                 <hr />

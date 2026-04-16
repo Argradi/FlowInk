@@ -36,3 +36,16 @@
 hr{
     margin: 20px 0 20px 0;
 }
+
+#like-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    color: #FF8A8A;
+}
+
+#like-container span{
+    font-size: 1.1rem;
+    font-weight: bold;
+}
