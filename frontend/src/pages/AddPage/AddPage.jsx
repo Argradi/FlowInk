@@ -44,7 +44,16 @@ function AddPage() {
     const handleSubmit = (e) => {
         e.preventDefault()
 
-        const newTattoo = { title, description, image, isSelling, price }
+        const newTattoo = {
+            title,
+            description,
+            image,
+            isSelling,
+        }
+
+        if (isSelling) {
+            newTattoo.price = Number(price);
+        }
 
         const localToken = localStorage.getItem("authToken")
 

@@ -21,16 +21,24 @@ const tattooSchema = new Schema(
             },
             text: { type: String },
         }],
-        isSelling: { 
-            type: Boolean, 
-            default: false 
+        isSelling: {
+            type: Boolean,
+            default: false
         },
-        price: { 
-            type: Number, 
-            required: function() {
+        price: {
+            type: Number,
+            required: function () {
                 return this.isSelling === true;
             },
-            min: [0.50, 'El precio mínimo debe ser 0.50']
+            validate: {
+                validator: function (v) {
+                    if (this.isSelling) {
+                        return v >= 0.50;
+                    }
+                    return true;
+                },
+                message: 'Si el diseño está a la venta, el precio mínimo debe ser 0.50€'
+            }
         },
     },
     {
