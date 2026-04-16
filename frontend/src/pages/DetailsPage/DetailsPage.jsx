@@ -6,6 +6,7 @@ import TextField from '@mui/material/TextField';
 import InputAdornment from '@mui/material/InputAdornment';
 import IconButton from '@mui/material/IconButton';
 import SendIcon from '@mui/icons-material/Send';
+import Button from '@mui/material/Button';
 import './DetailsPage.css'
 
 function DetailsPage() {
@@ -92,16 +93,17 @@ function DetailsPage() {
             <div id="info-container">
                 <h3>{tattoo.userId.name}</h3>
                 <h2>{tattoo.title}</h2>
-                <hr />
-                <p>{tattoo.description}</p>
                 {user && user._id === tattoo.userId._id && (
                     <>
-                        <button onClick={deleteTatto}>Borrar</button>
+                        <Button onClick={deleteTatto} sx={{ color: '#b91f1f' }}>Borrar</Button>
                         <Link to={`/edit/${tattooId}`}>
-                            <button>Editar</button>
+                            <Button sx={{ color: "#FF8A8A" }}>Editar</Button>
                         </Link>
                     </>
                 )}
+                <Button onClick={likeTattoo}>Like {likes.length}</Button>
+                <hr />
+                <p>{tattoo.description}</p>
                 <hr />
                 <h2>Comentarios ({tattoo.comments.length})</h2>
                 <form onSubmit={handleSubmit} id="comment">
@@ -141,7 +143,6 @@ function DetailsPage() {
                     />
                 </form>
 
-                <button onClick={likeTattoo}>Like {likes.length}</button>
                 <div>
                     {tattoo.comments.map((comment) => {
                         return (

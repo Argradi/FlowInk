@@ -1,11 +1,15 @@
 import axios from "axios"
 import { useEffect, useState } from "react"
 import { useNavigate, useParams } from "react-router-dom"
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
+import Box from '@mui/material/Box'
+import './EditPage.css'
 
 function AddPage() {
     const navigate = useNavigate()
 
-    const [ tattoo, setTattoo ] = useState({})
+    const [tattoo, setTattoo] = useState({})
 
     const { tattooId } = useParams()
 
@@ -19,7 +23,7 @@ function AddPage() {
     }
 
     useEffect(() => {
-        getTattoo()       
+        getTattoo()
     }, [tattooId])
 
     const handleChange = (e) => {
@@ -49,40 +53,62 @@ function AddPage() {
             })
     }
 
-    return(
-        <>
-            <h3>AddPage</h3>
-            <form onSubmit={handleSubmit}>
-                <label>
-                    Title:
-                    <input
-                        type="text"
-                        name="title"
-                        value={tattoo.title}
-                        onChange={handleChange}
-                    />
-                </label>
-                <label>
-                    Description:
-                    <textarea
-                        type="text"
-                        name="description"
-                        value={tattoo.description}
-                        onChange={handleChange}
-                    />
-                </label>
-                <label>
-                    Image:
-                    <input
-                        type="text"
-                        name="image"
-                        value={tattoo.image}
-                        onChange={handleChange}
-                    />
-                </label>
-                <button>Editar</button>
-            </form>
-        </>
+    return (
+        <div className='form-container'>
+            <Box
+                component="form"
+                onSubmit={handleSubmit}
+                sx={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: '15px',
+                    width: '50%',
+                    minWidth: '300px'
+                }}
+            >
+                <h3>Edit</h3>
+                <TextField
+                    className="add-field"
+                    label="Title"
+                    variant="outlined"
+                    name="title"
+                    value={tattoo.title}
+                    onChange={handleChange}
+                    required
+                    fullWidth
+                    sx={{
+                        "& .MuiInputBase-input": { color: "white" },
+                        "& .MuiInputLabel-root": { color: "gray" },
+                        "& .MuiOutlinedInput-root": {
+                            "& fieldset": { borderColor: "white" },
+                            "&.Mui-focused fieldset": { borderColor: "#FF8A8A" },
+                        },
+                    }}
+                />
+                <TextField
+                    className="add-field"
+                    label="Description"
+                    variant="outlined"
+                    name="description"
+                    value={tattoo.description}
+                    onChange={handleChange}
+                    required
+                    fullWidth
+                    multiline
+                    sx={{
+                        "& .MuiInputBase-input": { color: "white" },
+                        "& .MuiInputLabel-root": { color: "gray" },
+                        "& .MuiOutlinedInput-root": {
+                            "& fieldset": { borderColor: "white" },
+                            "&.Mui-focused fieldset": { borderColor: "#FF8A8A" },
+                        },
+                    }}
+                />
+                <Button type="submit" variant="contained" sx={{ backgroundColor: "#FF8A8A" }}>
+                    Editar
+                </Button>
+            </Box>
+        </div>
     )
 }
 

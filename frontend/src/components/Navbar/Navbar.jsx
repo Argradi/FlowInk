@@ -36,10 +36,10 @@ function Navbar() {
                         open={open}
                         onClose={handleClose}
                     >
-                        <Box>
+                        <Box className="modal-container">
                             <h2 id="child-modal-title">¿Desea cerrar sesion?</h2>
-                            <Button onClick={handleClose}>No</Button>
-                            <Button onClick={handleLogout}>Si</Button>
+                            <Button onClick={handleClose} sx={{ color: "white" }}>No</Button>
+                            <Button onClick={handleLogout} sx={{ color: "white" }}>Si</Button>
                         </Box>
                     </Modal>
                 </>
