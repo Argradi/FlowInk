@@ -7,6 +7,7 @@ import InputAdornment from '@mui/material/InputAdornment';
 import IconButton from '@mui/material/IconButton';
 import SendIcon from '@mui/icons-material/Send';
 import Button from '@mui/material/Button';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import './DetailsPage.css'
 
 function DetailsPage() {
@@ -25,6 +26,7 @@ function DetailsPage() {
         axios
             .get(`${import.meta.env.VITE_API_URL}/api/tattoos/${tattooId}`)
             .then((tattoo) => {
+                console.log(tattoo.data)
                 setTattoo(tattoo.data)
                 setLikes(tattoo.data.likes)
             })
@@ -81,6 +83,29 @@ function DetailsPage() {
                 alert("Error al añadir el comentario: " + err.response.data.message)
             })
     }
+
+    const handleBuy = () => {
+        const paymentData = {
+            tattooId: tattoo._id,
+            title: tattoo.title,
+            price: tattoo.price,
+            image: tattoo.image
+        };
+
+        axios
+            .post(`${import.meta.env.VITE_API_URL}/api/payments/create-checkout-session`, paymentData, {
+                headers: { Authorization: `Bearer ${localToken}` }
+            })
+            .then((response) => {
+                if (response.data.url) {
+                    window.location.href = response.data.url;
+                }
+            })
+            .catch((err) => {
+                console.log("Error al procesar el pago con Stripe:", err);
+                alert("No se pudo iniciar el proceso de pago. Inténtalo de nuevo.");
+            });
+    };
 
     if (!tattoo)
         return <h3>Cargando tatuaje</h3>
@@ -153,6 +178,11 @@ function DetailsPage() {
                         )
                     })}
                 </div>
+                {tattoo.isSelling && (
+                    <IconButton className="floating-button" onClick={handleBuy}>
+                        <ShoppingCartIcon />
+                    </IconButton>
+                )}
             </div>
         </div>
     )

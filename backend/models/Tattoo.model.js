@@ -20,7 +20,18 @@ const tattooSchema = new Schema(
                 ref: 'User'
             },
             text: { type: String },
-        }]
+        }],
+        isSelling: { 
+            type: Boolean, 
+            default: false 
+        },
+        price: { 
+            type: Number, 
+            required: function() {
+                return this.isSelling === true;
+            },
+            min: [0.50, 'El precio mínimo debe ser 0.50']
+        },
     },
     {
         timestamps: true,

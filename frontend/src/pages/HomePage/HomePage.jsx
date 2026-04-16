@@ -1,11 +1,15 @@
 import { useEffect, useState } from "react"
 import TattooCard from "../../components/TattooCard/TattooCard"
 import axios from 'axios'
+import IconButton from '@mui/material/IconButton';
+import AddIcon from '@mui/icons-material/Add';
 import './HomePage.css'
+import { useNavigate } from "react-router-dom";
 
 function HomePage() {
+    const navigate = useNavigate()
 
-    const [ tattoos, setTattoos ] = useState([])
+    const [tattoos, setTattoos] = useState([])
 
     const getTattoos = () => {
         axios
@@ -22,13 +26,16 @@ function HomePage() {
         getTattoos()
     }, [])
 
-    return(
+    return (
         <div id="home-page">
             {tattoos.map((tattoo) => {
-                return(
-                    <TattooCard key={tattoo.id} tattoo={tattoo}/>
+                return (
+                    <TattooCard key={tattoo.id} tattoo={tattoo} />
                 )
             })}
+            <IconButton className="floating-button" onClick={() => {navigate('/add')}}>
+                <AddIcon />
+            </IconButton>
         </div>
     )
 }

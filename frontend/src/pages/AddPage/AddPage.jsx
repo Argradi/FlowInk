@@ -3,6 +3,8 @@ import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
+import Switch from '@mui/material/Switch';
+import FormControlLabel from '@mui/material/FormControlLabel';
 import './AddPage.css'
 
 function AddPage() {
@@ -11,6 +13,8 @@ function AddPage() {
     const [title, setTitle] = useState()
     const [image, setImage] = useState()
     const [description, setDescription] = useState()
+    const [isSelling, setIsSelling] = useState(false)
+    const [price, setPrice] = useState(0)
     const [isUploading, setIsUploading] = useState(false);
 
     const handleImage = (e) => {
@@ -40,7 +44,7 @@ function AddPage() {
     const handleSubmit = (e) => {
         e.preventDefault()
 
-        const newTattoo = { title, description, image }
+        const newTattoo = { title, description, image, isSelling, price }
 
         const localToken = localStorage.getItem("authToken")
 
@@ -106,6 +110,35 @@ function AddPage() {
                             },
                         }}
                     />
+                    <FormControlLabel control={
+                            <Switch 
+                                checked={isSelling}
+                                onChange={(e) => setIsSelling(e.target.checked)} 
+                            />
+                        } label="Sell" 
+                    />
+                    {isSelling && (
+                        <TextField
+                            className="add-field"
+                            label="Precio (€)"
+                            type="number"
+                            variant="outlined"
+                            value={price}
+                            onChange={(e) => setPrice(e.target.value)}
+                            required
+                            fullWidth
+                            slotProps={{ htmlInput: { min: 0.5, step: 0.01 } }}
+                            sx={{
+                                marginBottom: "20px",
+                                "& .MuiInputBase-input": { color: "white" },
+                                "& .MuiInputLabel-root": { color: "gray" },
+                                "& .MuiOutlinedInput-root": {
+                                    "& fieldset": { borderColor: "white" },
+                                    "&.Mui-focused fieldset": { borderColor: "#FF8A8A" },
+                                },
+                            }}
+                        />
+                    )}
                     <Button type="submit" variant="contained" disabled={isUploading || !image} sx={{ backgroundColor: "#FF8A8A" }}>
                         {isUploading ? "Subiendo imagen..." : "Publicar"}
                     </Button>
