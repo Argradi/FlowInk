@@ -57,6 +57,12 @@ function DetailsPage() {
     }
 
     const likeTattoo = () => {
+
+        if (!localToken) {
+            alert("No puedes dar like: Debes iniciar sesión primero.");
+            return;
+        }
+
         axios
             .post(`${import.meta.env.VITE_API_URL}/api/tattoos/${tattooId}/likes`, {}, {
                 headers: { Authorization: `Bearer ${localToken}` }
@@ -70,7 +76,10 @@ function DetailsPage() {
     const handleSubmit = (e) => {
         e.preventDefault()
 
-        const localToken = localStorage.getItem("authToken")
+        if (!localToken) {
+            alert("No puedes comentar: Debes iniciar sesión primero.");
+            return;
+        }
 
         axios
             .post(`${import.meta.env.VITE_API_URL}/api/tattoos/${tattooId}/comments`, { text }, {
@@ -148,42 +157,44 @@ function DetailsPage() {
                 <p>{tattoo.description}</p>
                 <hr />
                 <h2>Comentarios ({tattoo.comments.length})</h2>
-                <form onSubmit={handleSubmit} id="comment">
-                    <TextField
-                        id="comment-field"
-                        label="Deja tu comentario"
-                        variant="outlined"
-                        name="description"
-                        value={text}
-                        onChange={(e) => setText(e.target.value)}
-                        fullWidth
-                        multiline
-                        sx={{
-                            "& .MuiInputBase-input": { color: "white" },
-                            "& .MuiInputLabel-root": { color: "gray" },
-                            "& .MuiOutlinedInput-root": {
-                                "& fieldset": { borderColor: "white" },
-                                "&.Mui-focused fieldset": { borderColor: "#FF8A8A" },
-                            },
-                        }}
-                        slotProps={{
-                            input: {
-                                endAdornment: (
-                                    <InputAdornment >
-                                        <IconButton
-                                            type="submit"
-                                            edge="end"
-                                            sx={{
-                                                color: "#FF8A8A",
-                                            }}>
-                                            <SendIcon />
-                                        </IconButton>
-                                    </InputAdornment>
-                                ),
-                            },
-                        }}
-                    />
-                </form>
+                {user && (
+                    <form onSubmit={handleSubmit} id="comment">
+                        <TextField
+                            id="comment-field"
+                            label="Deja tu comentario"
+                            variant="outlined"
+                            name="description"
+                            value={text}
+                            onChange={(e) => setText(e.target.value)}
+                            fullWidth
+                            multiline
+                            sx={{
+                                "& .MuiInputBase-input": { color: "white" },
+                                "& .MuiInputLabel-root": { color: "gray" },
+                                "& .MuiOutlinedInput-root": {
+                                    "& fieldset": { borderColor: "white" },
+                                    "&.Mui-focused fieldset": { borderColor: "#FF8A8A" },
+                                },
+                            }}
+                            slotProps={{
+                                input: {
+                                    endAdornment: (
+                                        <InputAdornment >
+                                            <IconButton
+                                                type="submit"
+                                                edge="end"
+                                                sx={{
+                                                    color: "#FF8A8A",
+                                                }}>
+                                                <SendIcon />
+                                            </IconButton>
+                                        </InputAdornment>
+                                    ),
+                                },
+                            }}
+                        />
+                    </form>
+                )}
 
                 <div>
                     {tattoo.comments.map((comment) => {
