@@ -24,6 +24,14 @@ function DetailsPage() {
 
     const { tattooId } = useParams()
 
+    const getWatermarkedUrl = (url) => {
+        if (!url) return "";
+        
+        const transformation = "l_cooltext506589095590461_pvtpdu,o_50,w_600,e_negate/fl_layer_apply";
+        
+        return url.replace('/upload/', `/upload/${transformation}/`);
+    }
+
     const getTattoo = () => {
         axios
             .get(`${import.meta.env.VITE_API_URL}/api/tattoos/${tattooId}`)
@@ -124,7 +132,7 @@ function DetailsPage() {
     return (
         <div id="details-page">
             <div id="img-container">
-                <img src={tattoo.image} className={tattoo.isSelling ? "blurred-image" : ""} />
+                <img src={tattoo.isSelling ? getWatermarkedUrl(tattoo.image) : tattoo.image}/>
             </div>
             <div id="info-container">
                 <h3>{tattoo.userId.name}</h3>
