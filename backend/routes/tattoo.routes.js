@@ -7,6 +7,24 @@ const Tattoo = require("../models/Tattoo.model")
 const { isAuthenticated } = require("../middleware/jwt.middleware");
 const { isOwner } = require("../middleware/owner.middleware");
 const { routes } = require("../app");
+const { analyzeTattooImage } = require("../services/ai.service");
+
+router.post("/tattoos/analyze", isAuthenticated, (req, res, next) => {
+    const { image } = req.body;
+
+    if (!image) {
+        return res.status(400).json({ message: "No se ha proporcionado una URL de imagen" });
+    }
+
+    analyzeTattooImage(image)
+        .then((analysis) => {
+            res.status(200).json(analysis);
+        })
+        .catch((error) => {
+            console.error("Error en la ruta de análisis:", error);
+            res.status(500).json({ message: "Error al analizar la imagen con IA" });
+        });
+});
 
 router.post("/upload", isAuthenticated, fileUploader.single("image"), (req, res, next) => {
 

@@ -10,6 +10,13 @@ const tattooSchema = new Schema(
         title: { type: String, required: true },
         description: { type: String },
         image: { type: String, required: true },
+        style: { 
+            type: String, 
+            enum: ['Realismo', 'Tradicional', 'Fine Line', 'Blackwork', 'Minimalista', 'Japonés', 'Tribal', 'Ilustrativo', 'Otro'],
+            default: 'Otro'
+        },
+        time: { type: String },
+        tags: [{ type: String }],
         likes: [{
             type: Schema.Types.ObjectId,
             ref: 'User'

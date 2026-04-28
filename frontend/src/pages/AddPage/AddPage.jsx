@@ -15,7 +15,12 @@ function AddPage() {
     const [description, setDescription] = useState()
     const [isSelling, setIsSelling] = useState(false)
     const [price, setPrice] = useState(0)
-    const [isUploading, setIsUploading] = useState(false);
+    const [style, setStyle] = useState("")
+    const [time, setTime] = useState("")
+    const [tags, setTags] = useState([])
+    const [isUploading, setIsUploading] = useState(false)
+
+    const localToken = localStorage.getItem("authToken")
 
     const handleImage = (e) => {
         const file = e.target.files[0]
@@ -25,20 +30,41 @@ function AddPage() {
         const uploadData = new FormData()
         uploadData.append("image", file)
 
-        const localToken = localStorage.getItem("authToken");
-
         axios
             .post(`${import.meta.env.VITE_API_URL}/api/upload`, uploadData, {
                 headers: { Authorization: `Bearer ${localToken}` }
             })
             .then((response) => {
-                setImage(response.data.fileUrl);
-                setIsUploading(false);
+                setImage(response.data.fileUrl)
+                setIsUploading(false)
             })
             .catch((err) => {
-                console.log("Error al subir la imagen:", err);
-                setIsUploading(false);
+                console.log("Error al subir la imagen:", err)
+                setIsUploading(false)
             })
+    }
+
+    const handleIA = () => {
+
+        if (!image) {
+            alert("Por favor, sube una imagen primero");
+            return;
+        }
+
+        axios
+            .post(`${import.meta.env.VITE_API_URL}/api/tattoos/analyze`,
+                { image: image },
+                { headers: { Authorization: `Bearer ${localToken}` } }
+            )
+            .then((response) => {
+                const { estilo, tiempo, tags, descripcion } = response.data;
+
+                setStyle(estilo || "");
+                setTime(tiempo || "");
+                setTags(tags || []);
+                setDescription(descripcion || "");
+            })
+            .catch((err) => console.log("Error al analizar con IA:", err))
     }
 
     const handleSubmit = (e) => {
@@ -49,10 +75,13 @@ function AddPage() {
             description,
             image,
             isSelling,
+            style,
+            time,
+            tags
         }
 
         if (isSelling) {
-            newTattoo.price = Number(price);
+            newTattoo.price = Number(price)
         }
 
         const localToken = localStorage.getItem("authToken")
@@ -100,6 +129,9 @@ function AddPage() {
                             },
                         }}
                     />
+                    <Button onClick={handleIA}>
+                        Generar con IA
+                    </Button>
                     <TextField
                         className="add-field"
                         label="Description"
@@ -119,12 +151,49 @@ function AddPage() {
                             },
                         }}
                     />
+                    <TextField
+                        className="add-field"
+                        label="Style"
+                        variant="outlined"
+                        name="style"
+                        value={style}
+                        onChange={(e) => setStyle(e.target.value)}
+                        required
+                        fullWidth
+                        sx={{
+                            "& .MuiInputBase-input": { color: "white" },
+                            "& .MuiInputLabel-root": { color: "gray" },
+                            "& .MuiOutlinedInput-root": {
+                                "& fieldset": { borderColor: "white" },
+                                "&.Mui-focused fieldset": { borderColor: "#FF8A8A" },
+                            },
+                        }}
+                    />
+                    <TextField
+                        className="add-field"
+                        label="Time"
+                        variant="outlined"
+                        name="time"
+                        value={time}
+                        onChange={(e) => setTime(e.target.value)}
+                        required
+                        fullWidth
+                        sx={{
+                            "& .MuiInputBase-input": { color: "white" },
+                            "& .MuiInputLabel-root": { color: "gray" },
+                            "& .MuiOutlinedInput-root": {
+                                "& fieldset": { borderColor: "white" },
+                                "&.Mui-focused fieldset": { borderColor: "#FF8A8A" },
+                            },
+                        }}
+                    />
+                    
                     <FormControlLabel control={
-                            <Switch 
-                                checked={isSelling}
-                                onChange={(e) => setIsSelling(e.target.checked)} 
-                            />
-                        } label="Sell" 
+                        <Switch
+                            checked={isSelling}
+                            onChange={(e) => setIsSelling(e.target.checked)}
+                        />
+                    } label="Sell"
                     />
                     {isSelling && (
                         <TextField
