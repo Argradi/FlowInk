@@ -5,6 +5,8 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import Switch from '@mui/material/Switch';
 import FormControlLabel from '@mui/material/FormControlLabel';
+import CircularProgress from '@mui/material/CircularProgress';
+import Box from '@mui/material/Box';
 import './AddPage.css'
 
 function AddPage() {
@@ -19,6 +21,7 @@ function AddPage() {
     const [time, setTime] = useState("")
     const [tags, setTags] = useState([])
     const [isUploading, setIsUploading] = useState(false)
+    const [isLoadingIA, setIsLoadingIA] = useState(false)
 
     const localToken = localStorage.getItem("authToken")
 
@@ -51,6 +54,8 @@ function AddPage() {
             return;
         }
 
+        setIsLoadingIA(true)
+
         axios
             .post(`${import.meta.env.VITE_API_URL}/api/tattoos/analyze`,
                 { image: image },
@@ -63,6 +68,7 @@ function AddPage() {
                 setTime(tiempo || "");
                 setTags(tags || []);
                 setDescription(descripcion || "");
+                setIsLoadingIA(false)
             })
             .catch((err) => console.log("Error al analizar con IA:", err))
     }
@@ -111,6 +117,31 @@ function AddPage() {
                     </label>
                 </div>
                 <div id="add-text">
+                    {isLoadingIA &&
+                        <Box
+                            sx={{
+                                position: 'absolute',
+                                top: '15vh',
+                                left: '50vw',
+                                display: 'flex',
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                                width: '50vw',
+                                height: '80vh',
+                                backgroundColor: '#181818',
+                                opacity: '0.8',
+                                zIndex: 10,
+                            }}
+                        >
+                            <CircularProgress
+                                aria-label="Loading…"
+                                sx={{
+                                    thickness: 5
+                                }}
+                                size={60}
+                            />
+                        </Box>
+                    }
                     <TextField
                         className="add-field"
                         label="Title"
@@ -187,7 +218,7 @@ function AddPage() {
                             },
                         }}
                     />
-                    
+
                     <FormControlLabel control={
                         <Switch
                             checked={isSelling}
@@ -221,7 +252,7 @@ function AddPage() {
                         {isUploading ? "Subiendo imagen..." : "Publicar"}
                     </Button>
                 </div>
-            </form>
+            </form >
         </>
     )
 }
